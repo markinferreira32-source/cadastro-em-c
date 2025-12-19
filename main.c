@@ -17,6 +17,7 @@ void menu() {
     printf("1 - Cadastrar usuario\n");
     printf("2 - Listar usuarios\n");
     printf("3 - Buscar usuario\n");
+    printf("4 - Remover usuario\n");
     printf("0 - Sair\n");
     printf("Escolha uma opcao: ");
 }
@@ -84,6 +85,38 @@ void buscarUsuario() {
     }
 }
 
+void removerUsuario() {
+    char nomeBusca[50];
+    int encontrado = -1;
+
+    if (total == 0) {
+        printf("Nenhum usuario cadastrado.\n");
+        return;
+    }
+
+    printf("Digite o nome do usuario a remover: ");
+    scanf(" %[^\n]", nomeBusca);
+
+    for (int i = 0; i < total; i++) {
+        if (strcmp(pessoas[i].nome, nomeBusca) == 0) {
+            encontrado = i;
+            break;
+        }
+    }
+
+    if (encontrado == -1) {
+        printf("Usuario nao encontrado.\n");
+        return;
+    }
+
+    for (int i = encontrado; i < total - 1; i++) {
+        pessoas[i] = pessoas[i + 1];
+    }
+
+    total--;
+    printf("Usuario removido com sucesso!\n");
+}
+
 
 int main() {
     int opcao;
@@ -102,6 +135,9 @@ int main() {
             case 3:
                 buscarUsuario();
                 break;
+            case 4:
+                removerUsuario();
+                break;    
             case 0:
                 printf("Saindo...\n");
                 break;
