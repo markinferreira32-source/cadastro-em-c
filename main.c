@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #define MAX 20
 
@@ -15,6 +16,7 @@ void menu() {
     printf("\n==== INICIO ====\n");
     printf("1 - Cadastrar usuario\n");
     printf("2 - Listar usuarios\n");
+    printf("3 - Buscar usuario\n");
     printf("0 - Sair\n");
     printf("Escolha uma opcao: ");
 }
@@ -54,6 +56,35 @@ void listarUsuario() {
     }
 }
 
+void buscarUsuario() {
+    char nomeBusca[50];
+    int encontrado = 0;
+
+    if (total == 0) {
+        printf("Nenhum usuario cadastrado.\n");
+        return;
+    }
+
+    printf("\nDigite o nome do usuario: ");
+    scanf(" %[^\n]", nomeBusca);
+
+    for (int i = 0; i < total; i++) {
+        if (strcmp(pessoas[i].nome, nomeBusca) == 0) {
+            printf("\nUsuario encontrado:\n");
+            printf("Nome: %s\n", pessoas[i].nome);
+            printf("Idade: %d\n", pessoas[i].idade);
+            printf("Telefone: %s\n", pessoas[i].telefone);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Usuario nao encontrado.\n");
+    }
+}
+
+
 int main() {
     int opcao;
 
@@ -67,6 +98,9 @@ int main() {
                 break;
             case 2:
                 listarUsuario();
+                break;
+            case 3:
+                buscarUsuario();
                 break;
             case 0:
                 printf("Saindo...\n");
