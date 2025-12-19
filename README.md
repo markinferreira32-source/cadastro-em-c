@@ -16,3 +16,4 @@ Projeto desenvolvido em linguagem C com o objetivo de praticar lógica de progra
 ```bash
 gcc main.c -o main
 ./main
+
