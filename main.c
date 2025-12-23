@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAX 20
 
@@ -11,6 +12,10 @@ typedef struct {
 
 Pessoa pessoas[MAX];
 int total = 0;
+
+void salvarEmArquivo();
+void carregarDoArquivo();
+
 
 void menu() {
     printf("\n==== INICIO ====\n");
@@ -38,6 +43,7 @@ void cadastrarUsuario() {
     scanf(" %[^\n]", pessoas[total].telefone);
 
     total++;
+    salvarEmArquivo();
     printf("Usuario cadastrado com sucesso!\n");
 }
 
@@ -117,9 +123,48 @@ void removerUsuario() {
     printf("Usuario removido com sucesso!\n");
 }
 
+void salvarEmArquivo() {
+    FILE *arquivo = fopen("usuarios.txt", "a");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return;
+    }
+
+    Pessoa p = pessoas[total - 1];
+
+    fprintf(arquivo, "%s;%d;%s\n", p.nome, p.idade, p.telefone);
+
+    fclose(arquivo);
+}
+
+void carregarDoArquivo() {
+    FILE *arquivo = fopen("usuarios.txt", "r");
+
+    if (arquivo == NULL) {
+        return;
+    }
+
+    while (fscanf(arquivo, "%49[^;];%d;%19[^\n]\n",
+                  pessoas[total].nome,
+                  &pessoas[total].idade,
+                  pessoas[total].telefone) == 3) {
+
+        total++;
+
+        if (total >= MAX) {
+            break;
+        }
+    }
+
+    fclose(arquivo);
+}
+
 
 int main() {
     int opcao;
+
+    carregarDoArquivo();
 
     do {
         menu();
