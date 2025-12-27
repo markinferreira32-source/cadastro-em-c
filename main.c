@@ -15,6 +15,9 @@ int total = 0;
 
 void salvarEmArquivo();
 void carregarDoArquivo();
+int usuarioExiste(char nome[]);
+void reescreverArquivo();
+
 
 
 void menu() {
@@ -35,6 +38,11 @@ void cadastrarUsuario() {
 
     printf("Nome: ");
     scanf(" %[^\n]", pessoas[total].nome);
+
+    if (usuarioExiste(pessoas[total].nome)) {
+        printf("Esse usuario ja existe!\n");
+        return;
+    }
 
     printf("Idade: ");
     scanf("%d", &pessoas[total].idade);
@@ -120,6 +128,7 @@ void removerUsuario() {
     }
 
     total--;
+    reescreverArquivo(); 
     printf("Usuario removido com sucesso!\n");
 }
 
@@ -158,6 +167,37 @@ void carregarDoArquivo() {
     }
 
     fclose(arquivo);
+}
+
+void reescreverArquivo() {
+    FILE *arquivo = fopen("usuarios.txt", "w");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return;
+    }
+
+    fflush(arquivo);   // força limpeza do arquivo
+
+    for (int i = 0; i < total; i++) {
+        fprintf(arquivo, "%s;%d;%s\n",
+                pessoas[i].nome,
+                pessoas[i].idade,
+                pessoas[i].telefone);
+    }
+
+    fflush(arquivo);   // força escrita no disco
+    fclose(arquivo);
+}
+
+
+int usuarioExiste(char nome[]) {
+    for (int i = 0; i < total; i++) {
+        if (strcmp(pessoas[i].nome, nome) == 0) {
+            return 1;   // achou
+        }
+    }
+    return 0;   // não achou
 }
 
 
