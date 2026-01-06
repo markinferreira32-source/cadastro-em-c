@@ -1,19 +1,17 @@
-# Sistema de Cadastro em C
+# Cadastro de Usuários em C
 
-Projeto desenvolvido em linguagem C com o objetivo de praticar lógica de programação, uso de structs, funções e controle de versão com Git/GitHub.
+Projeto desenvolvido em linguagem C com o objetivo de aplicar conceitos fundamentais de programação estruturada, manipulação de arquivos e organização modular de código.
 
 ## Funcionalidades
 - Cadastro de usuários
 - Listagem de usuários
-- Busca de usuário por nome
-- Remoção de usuário
+- Busca por ID
+- Remoção de usuários
+- Persistência de dados em arquivo (.txt)
 
-## Tecnologias Utilizadas
+## Tecnologias utilizadas
 - Linguagem C
+- GCC
 - Git e GitHub
 
-## Como executar
-```bash
-gcc main.c -o main
-./main
-
+## Estrutura do projeto
